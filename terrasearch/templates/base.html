@@ -7,7 +7,7 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge" />
         <title>
             {% block title %}
-                terrasearch
+                TerraSearch
             {% endblock title %}
         </title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -54,11 +54,11 @@
                             aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <a class="navbar-brand" href="{% url 'search-list' %}">TerraSearch</a>
+                    <a class="navbar-brand" href="{% url 'home' %}">TerraSearch</a>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" href="{% url 'search-list' %}">Search List <span class="visually-hidden">(current)</span></a>
+                                <a class="nav-link" href="{% url 'search:search-list' %}">Search List <span class="visually-hidden">(current)</span></a>
                             </li>
                             {% if request.user.is_authenticated %}
                                 <li class="nav-item">

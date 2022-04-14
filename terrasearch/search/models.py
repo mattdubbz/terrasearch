@@ -73,9 +73,6 @@ class Search(models.Model):
     bed_diff = models.IntegerField(default=1)
     bath_diff = models.DecimalField(max_digits=3, decimal_places=1, default=0.5)
     year_built_diff = models.IntegerField(default=10)
-    distance_diff = models.DecimalField(
-        max_digits=3, decimal_places=2, default=0, blank=True, null=True
-    )
     sqft_diff = models.IntegerField(default=150)
 
     class Meta:
