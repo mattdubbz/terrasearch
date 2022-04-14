@@ -1,4 +1,4 @@
-# from django.urls import path
+from django.urls import path
 
 app_name = "search"
-urlpatterns = []
+urlpatterns = [path()]

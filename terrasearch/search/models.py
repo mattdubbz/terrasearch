@@ -64,14 +64,14 @@ class Comparable(Property):
 # ------------------------------------------------------------------------------
 # The Search model represents the search criteria used to locate a LeadProperty based on the existance
 # of Comparables.  A user can have many searches and searches can be re-used.
-class Search(Property):
+class Search(models.Model):
     user = models.ForeignKey(
         "users.User", on_delete=models.CASCADE, related_name="searches"
     )
-    address = models.CharField(max_length=100, blank=True, null=True)
-    comp_count = models.IntegerField(default=1)
+    city = models.CharField(max_length=100, blank=True, null=True)
+    state = models.CharField(max_length=2, blank=True, null=True)
     bed_diff = models.IntegerField(default=1)
-    bath_diff = models.IntegerField(default=1)
+    bath_diff = models.DecimalField(max_digits=3, decimal_places=1, default=0.5)
     year_built_diff = models.IntegerField(default=10)
     distance_diff = models.DecimalField(
         max_digits=3, decimal_places=2, default=0, blank=True, null=True
@@ -83,7 +83,7 @@ class Search(Property):
         verbose_name_plural = "Searches"
 
     def __str__(self):
-        return self.address
+        return self.city + ", " + self.state
 
     def get_absolute_url(self):
         return reverse("Search_detail", kwargs={"pk": self.pk})

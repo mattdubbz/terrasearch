@@ -9,6 +9,7 @@ astroid==2.9.3
 asttokens==2.0.5
 async-generator==1.10
 attrs==21.4.0
+autopep8==1.6.0
 Babel==2.9.1
 backcall==0.2.0
 billiard==3.6.4.0
