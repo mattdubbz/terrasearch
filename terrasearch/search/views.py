@@ -28,11 +28,12 @@ class SearchDetailView(LoginRequiredMixin, generic.DetailView):
 class SearchUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = "search/search_update.html"
     model = Search
+    context_object_name = "search"
     form_class = SearchScrapeForm
     login_url = "account_login"
 
     def get_success_url(self):
-        return reverse_lazy("search:search-detail", kwargs={"pk": self.pk})
+        return reverse_lazy("search:search-detail", kwargs={"pk": self.kwargs["pk"]})
 
 
 class SearchDeleteView(LoginRequiredMixin, generic.DeleteView):
@@ -61,7 +62,7 @@ class LeadsListView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         search_pk = self.kwargs["pk"]
-        search = Search.objects.get(pk=search_pk)
+        search = get_object_or_404(Search, pk=search_pk)
         leads = search.leads.all()
 
         # LeadProperty.objects.filter(search=search_pk)

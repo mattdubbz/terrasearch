@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-    !
     <div class="container">
         <h1>Welcome to TerraSearch</h1>
     </div>
@@ -14,7 +13,6 @@
                    href="{% url 'account_signup' %}">Sign Up</a>
                 <a class="btn btn-primary" href="{% url 'account_login' %}">Sign In</a>
             {% endif %}
-            <a class="btn btn-primary" href="{% url 'account_login' %}">Log In</a>
         {% endif %}
     </div>
 {% endblock content %}

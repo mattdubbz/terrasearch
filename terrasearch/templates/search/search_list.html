@@ -4,22 +4,27 @@
         <h1>Search Results</h1>
     </div>
     {% for search in searches %}
-        <div class="card" style="width: 18rem;">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">{{ search.city }}, {{ search.state }}</h5>
-                <p class="card-text">
-                    Some quick example text to build on the card title and make up the bulk of the card's content.
-                </p>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">{{ search.beds }} bed</li>
-                <li class="list-group-item">{{ search.baths }} bath</li>
-                <li class="list-group-item">{{ search.sqft }} sqft</li>
-            </ul>
-            <div class="card-body">
-                <a href="#" class="card-link">Link to listing</a>
-                <a href="#" class="card-link">Another link</a>
+        <div class="container-fluid">
+            <div class="card" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{ search.city }}, {{ search.state }}</h5>
+                    <p class="card-text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati deleniti dolorem consequuntur minima quia amet quos libero reprehenderit excepturi? Voluptatibus ex, commodi blanditiis aliquam dolorum odio facere nobis quidem non?
+                    </p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">{{ search.bed_diff }} Bed difference</li>
+                    <li class="list-group-item">{{ search.bath_diff }} Bath difference</li>
+                    <li class="list-group-item">{{ search.year_built_diff }} Year-built difference</li>
+                    <li class="list-group-item">{{ search.sqft_diff }} SqFt difference</li>
+                </ul>
+                <div class="card-body">
+                    <a href="{% url 'search:lead-list' search.pk %}"
+                       class="btn btn-primary btn-sm">Execute Search</a>
+                    <a href="{% url 'search:search-detail' search.pk %}"
+                       class="btn btn-secondary btn-sm">Details</a>
+                </div>
             </div>
         </div>
     {% endfor %}
