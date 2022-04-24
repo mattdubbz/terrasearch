@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from .forms import SearchScrapeForm
-from .models import LeadProperty, Search
+from .models import ForSaleProperty, LeadProperty, Search, SoldProperty
 from .tasks import scrape_async
 
 
@@ -50,7 +50,8 @@ class SearchCreateView(LoginRequiredMixin, generic.CreateView):
     login_url = "account_login"
 
     def form_valid(self, form):
-        scrape_async.delay()
+        search_pk = self.pk
+        scrape_async.delay(search_pk)
         form.save(self.request.user)
         return super(SearchCreateView, self).form_valid(form)
 
@@ -63,6 +64,35 @@ class LeadsListView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         search_pk = self.kwargs["pk"]
         search = get_object_or_404(Search, pk=search_pk)
+        for_sale_props = ForSaleProperty.objects.filter(search=search_pk)
+        sold_props = SoldProperty.objects.filter(search=search_pk)
+        # get average sale price:
+        avg_sold_price = 0
+        count = 1
+        sum = 0
+        for sold in sold_props:
+            sum += sold.sold_price
+            count += 1
+        avg_sold_price = sum / count
+        # loop through all for-sale and sold-props to compare them
+        for sale in for_sale_props:
+            for sold in sold_props:
+                if sale.list_price <= (avg_sold_price * .70):
+                    if (sale.beds >= sold.beds - search.bed_diff) and (sale.beds <= sold.beds + search.bed_diff):
+                        if (sale.baths >= sold.baths - search.bath_diff) and (sale.baths <= sold.baths + search.bath_diff):
+                            if (sale.sqft >= sold.sqft - search.sqft_diff) and (sale.sqft <= sold.sqft + search.sqft_diff):
+                                LeadProperty.objects.create(
+                                    search=search,
+                                    list_price=sale.list_price,
+                                    image=sale.image,
+                                    link=sale.link,
+                                    address=sale.address,
+                                    city=sale.city,
+                                    state=sale.state,
+                                    zip=sale.zip,
+                                    beds=sale.beds,
+                                    baths=sale.baths,
+                                    sqft=sale.sqft)
         leads = search.leads.all()
 
         # LeadProperty.objects.filter(search=search_pk)
@@ -79,4 +109,7 @@ class LeadsListView(LoginRequiredMixin, generic.ListView):
         search = get_object_or_404(Search, pk=search_pk)
         count = LeadProperty.objects.filter(search=search).count()
         context["total_count"] = count
+        
+       
+
         return context
