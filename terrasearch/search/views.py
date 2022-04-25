@@ -109,7 +109,4 @@ class LeadsListView(LoginRequiredMixin, generic.ListView):
         search = get_object_or_404(Search, pk=search_pk)
         count = LeadProperty.objects.filter(search=search).count()
         context["total_count"] = count
-        
-       
-
         return context

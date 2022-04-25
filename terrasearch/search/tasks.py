@@ -7,7 +7,7 @@ SOLD_URL = "https://www.realtor.com/soldhomes"
 
 
 @shared_task
-def scrape_async(sear_pk):
+def scrape_async(search_pk):
     scrape_for_sale(FOR_SALE_URL, search_pk)
     scrape_sold(SOLD_URL, search_pk)
     return

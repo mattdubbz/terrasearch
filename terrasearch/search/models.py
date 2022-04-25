@@ -1,7 +1,6 @@
 from django.db import models
 from django.urls import reverse
 
-
 """Base abstract model for all properties and Search model to inherit from"""
 
 
@@ -98,7 +97,7 @@ class SoldProperty(Property):
 # ------------------------------------------------------------------------------
 """A ForSaleProperty is a property in the for-sale search results used for comparison
 with SoldProperties using the search criteria to determine is a LeadProperty or
-Comparable is present.  It is conceptually different than a LeadProperty and 
+Comparable is present.  It is conceptually different than a LeadProperty and
 used for comparison purposes only."""
 
 
