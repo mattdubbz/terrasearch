@@ -17,6 +17,6 @@ urlpatterns = [
     path("search_update/<int:pk>/", SearchUpdateView.as_view(), name="search-update"),
     path("search_delete/<int:pk>/", SearchDeleteView.as_view(), name="search-delete"),
     path(
-        "lead_list/<int:pk>", LeadsListView.as_view(), name="lead-list"
+        "lead_list/<int:pk>", LeadsListView.as_view(), name="leads-list"
     ),  # int is pk of the Search object
 ]

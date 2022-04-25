@@ -19,7 +19,7 @@
                 <li class="list-group-item">{{ search.sqft_diff }} SqFt difference</li>
             </ul>
             <div class="card-body">
-                <a href="{% url 'search:lead-list' search.pk %}"
+                <a href="{% url 'search:leads-list' search.pk %}"
                    class="btntn btn-primary btn-sm">Execute Search</a>
                 <a href="{% url 'search:search-update' search.pk %}"
                    class="btntn btn-primary btn-sm">Update</a>

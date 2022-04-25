@@ -53,7 +53,7 @@ class Comparable(Property):
         return self.address
 
     def get_absolute_url(self):
-        return reverse("comparable_detail", kwargs={"pk": self.pk})
+        return reverse("search:comparable-detail", kwargs={"pk": self.pk})
 
 
 # ------------------------------------------------------------------------------
@@ -91,7 +91,7 @@ class SoldProperty(Property):
         return self.address
 
     def get_absolute_url(self):
-        return reverse("sold_property_detail", kwargs={"pk": self.pk})
+        return reverse("search:sold-property-detail", kwargs={"pk": self.pk})
 
 
 # ------------------------------------------------------------------------------
@@ -125,7 +125,7 @@ class ForSaleProperty(Property):
         return self.address
 
     def get_absolute_url(self):
-        return reverse("for_sale_property_detail", kwargs={"pk": self.pk})
+        return reverse("search:for-sale-property-detail", kwargs={"pk": self.pk})
 
 
 # ------------------------------------------------------------------------------
@@ -158,7 +158,7 @@ class LeadProperty(Property):
         return self.address
 
     def get_absolute_url(self):
-        return reverse("lead_detail", kwargs={"pk": self.pk})
+        return reverse("search:lead-detail", kwargs={"pk": self.pk})
 
 
 # ------------------------------------------------------------------------------
@@ -186,4 +186,4 @@ class Search(models.Model):
         return self.city + ", " + self.state
 
     def get_absolute_url(self):
-        return reverse("Search_detail", kwargs={"pk": self.pk})
+        return reverse("search:search-detail", kwargs={"pk": self.pk})

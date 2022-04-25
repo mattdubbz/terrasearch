@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
     <div class="container">
-        <h1>Search Results</h1>
+        <h1>Search List</h1>
     </div>
     {% for search in searches %}
         <div class="container-fluid">
@@ -20,7 +20,7 @@
                     <li class="list-group-item">{{ search.sqft_diff }} SqFt difference</li>
                 </ul>
                 <div class="card-body">
-                    <a href="{% url 'search:lead-list' search.pk %}"
+                    <a href="{% url 'search:leads-list' search.pk %}"
                        class="btn btn-primary btn-sm">Execute Search</a>
                     <a href="{% url 'search:search-detail' search.pk %}"
                        class="btn btn-secondary btn-sm">Details</a>

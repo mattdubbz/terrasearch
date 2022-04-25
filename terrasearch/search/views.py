@@ -1,4 +1,3 @@
-from django import http
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
@@ -56,14 +55,16 @@ class SearchCreateView(LoginRequiredMixin, generic.CreateView):
 
 
 class LeadsListView(LoginRequiredMixin, generic.ListView):
-    template_name = "search/lead_list.html"
+    template_name = "search/leads_list.html"
     context_object_name = "leads"
     login_url = "account_login"
 
-    def setup(self, request: http.HttpRequest, *args, **kwargs) -> None:
+    def setup(self, request, *args, **kwargs):
+        super(LeadsListView, self).setup(request, *args, **kwargs)
         search_pk = self.kwargs["pk"]
         scrape_async.delay(search_pk)
-        return super().setup(request, *args, **kwargs)
+        self.kwargs["pk"] = search_pk
+        return
 
     def get_queryset(self):
         search_pk = self.kwargs["pk"]
