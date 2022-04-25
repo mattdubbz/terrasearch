@@ -1,3 +1,4 @@
+from django import http
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
@@ -50,8 +51,6 @@ class SearchCreateView(LoginRequiredMixin, generic.CreateView):
     login_url = "account_login"
 
     def form_valid(self, form):
-        search_pk = self.pk
-        scrape_async.delay(search_pk)
         form.save(self.request.user)
         return super(SearchCreateView, self).form_valid(form)
 
@@ -60,6 +59,11 @@ class LeadsListView(LoginRequiredMixin, generic.ListView):
     template_name = "search/lead_list.html"
     context_object_name = "leads"
     login_url = "account_login"
+    
+    def setup(self, request: http.HttpRequest, *args, **kwargs) -> None:
+        search_pk = self.kwargs["pk"]
+        scrape_async.delay(search_pk)
+        return super().setup(request, *args, **kwargs)
 
     def get_queryset(self):
         search_pk = self.kwargs["pk"]
@@ -77,10 +81,16 @@ class LeadsListView(LoginRequiredMixin, generic.ListView):
         # loop through all for-sale and sold-props to compare them
         for sale in for_sale_props:
             for sold in sold_props:
-                if sale.list_price <= (avg_sold_price * .70):
-                    if (sale.beds >= sold.beds - search.bed_diff) and (sale.beds <= sold.beds + search.bed_diff):
-                        if (sale.baths >= sold.baths - search.bath_diff) and (sale.baths <= sold.baths + search.bath_diff):
-                            if (sale.sqft >= sold.sqft - search.sqft_diff) and (sale.sqft <= sold.sqft + search.sqft_diff):
+                if sale.list_price <= (avg_sold_price * 0.70):
+                    if (sale.beds >= sold.beds - search.bed_diff) and (
+                        sale.beds <= sold.beds + search.bed_diff
+                    ):
+                        if (sale.baths >= sold.baths - search.bath_diff) and (
+                            sale.baths <= sold.baths + search.bath_diff
+                        ):
+                            if (sale.sqft >= sold.sqft - search.sqft_diff) and (
+                                sale.sqft <= sold.sqft + search.sqft_diff
+                            ):
                                 LeadProperty.objects.create(
                                     search=search,
                                     list_price=sale.list_price,
@@ -92,7 +102,8 @@ class LeadsListView(LoginRequiredMixin, generic.ListView):
                                     zip=sale.zip,
                                     beds=sale.beds,
                                     baths=sale.baths,
-                                    sqft=sale.sqft)
+                                    sqft=sale.sqft,
+                                )
         leads = search.leads.all()
 
         # LeadProperty.objects.filter(search=search_pk)

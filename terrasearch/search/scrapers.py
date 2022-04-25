@@ -14,7 +14,6 @@ from .models import ForSaleProperty, Search, SoldProperty
 opts = Options()
 opts.add_argument("--headless")
 # opts.set
-assert opts.headless  # Operating in headless mode
 driver = webdriver.Firefox(
     service=Service(GeckoDriverManager().install()), options=opts
 )

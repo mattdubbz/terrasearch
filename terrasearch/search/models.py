@@ -103,7 +103,7 @@ used for comparison purposes only."""
 
 class ForSaleProperty(Property):
     search = models.ForeignKey(
-        "search.Search", on_delete=models.CASCADE, related_name="leads"
+        "search.Search", on_delete=models.CASCADE, related_name="for_sale_props"
     )
     list_price = models.IntegerField(blank=True, null=True)
     list_date = models.DateField(blank=True, null=True)
