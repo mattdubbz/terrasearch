@@ -59,7 +59,7 @@ class LeadsListView(LoginRequiredMixin, generic.ListView):
     template_name = "search/lead_list.html"
     context_object_name = "leads"
     login_url = "account_login"
-    
+
     def setup(self, request: http.HttpRequest, *args, **kwargs) -> None:
         search_pk = self.kwargs["pk"]
         scrape_async.delay(search_pk)
