@@ -23,8 +23,11 @@ driver = webdriver.Firefox(
 def scrape_for_sale(url, search_pk):
 
     try:
-        WebDriverWait(driver, timeout=10).until(EC.visibility_of_element_located(
-            (By.XPATH, "//div[@class='rui__ermeke-1 YoPbk rui__p9wrku-1 ugMaj']")))
+        WebDriverWait(driver, timeout=10).until(
+            EC.visibility_of_element_located(
+                (By.XPATH, "//div[@class='rui__ermeke-1 YoPbk rui__p9wrku-1 ugMaj']")
+            )
+        )
         # ".//li[@class='jsx-1881802087 component_property-card']"
 
         # intitial search
