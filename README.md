@@ -118,3 +118,48 @@ Please note: For Celery's import magic to work, it is important *where* the cele
 ```bash
 sh django_db_reset.sh
 ```
+
+### Additional commands for working with postgres at the command line
+
+```bash
+createdb terrasearch
+dropdb -f terrasearch
+createuser terraadmin
+psql terrasearch
+CREATE USER terraAdmin WITH LOGIN PASSWORD 'terrapass';
+ALTER ROLE terraadmin WITH SUPERUSER;
+GRANT ALL PRIVILEGES ON DATABASE terrasearch TO terraAdmin;
+# CREATE USER is alias for CREATE ROLE
+
+
+psql --version
+brew services start postgresql      #to start
+brew services stop postgresql       #to stop
+brew services restart postgresql    #to restart
+psql postgres                       #log into postresql service
+
+\du    #list all users
+\l    #list all databases
+\c [dbname] #connect a database
+\q    #quit
+\dt   #list all tables in datapase
+
+# to add a role
+CREATE ROLE terraAdmin WITH LOGIN PASSWORD 'password';
+ALTER ROLE terraAdmin CREATEDB;
+```
+
+### Additional Redis commands
+
+```bash
+redis-server    #start the redis server
+redis-server start
+redis-server stop
+redis-server restart
+
+#open new terminal for redis cli
+redis-cli       #take note of the ip 127.0.0.1:6379
+
+#check to see ifd redis server is running
+redis-cli ping  #should return PONG
+```
